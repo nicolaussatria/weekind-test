@@ -18,7 +18,7 @@ import legorot from "../components/assets/lego-rotate-1x.png";
 
 import "./mainPages.css";
 
-const mainPages = () => {
+const MainPages = () => {
   AOS.init();
 
   const slidesTesti = [
@@ -52,33 +52,54 @@ const mainPages = () => {
     },
   ];
 
-  const slidesTips = [
-    {
-      id: "dbh6fghjgj",
-      title: "Start quickly with simple steps",
-      slug: "start-quickly-with-simple-steps",
-      image:
-        "https://wknd-take-home-challenge-api.herokuapp.com/dbh6fghjgj.jpg",
-    },
-    {
-      id: "lgmd6ielxi",
-      title: "Run smoothly at vero eos et accusamus",
-      slug: "run-smoothly-at-vero-eos-et-accusamus",
-      image:
-        "https://wknd-take-home-challenge-api.herokuapp.com/lgmd6ielxi.jpg",
-    },
-    {
-      id: "qlrl8c8xqg",
-      title: "Denounce with righteous indignation",
-      slug: "denounce-with-righteous-indignation",
-      image:
-        "https://wknd-take-home-challenge-api.herokuapp.com/qlrl8c8xqg.jpg",
-    },
-  ];
+  // const slidesTips = [
+  //   {
+  //     id: "dbh6fghjgj",
+  //     title: "Start quickly with simple steps",
+  //     slug: "start-quickly-with-simple-steps",
+  //     image:
+  //       "https://wknd-take-home-challenge-api.herokuapp.com/dbh6fghjgj.jpg",
+  //   },
+  //   {
+  //     id: "lgmd6ielxi",
+  //     title: "Run smoothly at vero eos et accusamus",
+  //     slug: "run-smoothly-at-vero-eos-et-accusamus",
+  //     image:
+  //       "https://wknd-take-home-challenge-api.herokuapp.com/lgmd6ielxi.jpg",
+  //   },
+  //   {
+  //     id: "qlrl8c8xqg",
+  //     title: "Denounce with righteous indignation",
+  //     slug: "denounce-with-righteous-indignation",
+  //     image:
+  //       "https://wknd-take-home-challenge-api.herokuapp.com/qlrl8c8xqg.jpg",
+  //   },
+  // ];
+
+  const [slidesTips, setslidesTips] = useState([]);
+  // useEffect(() => {
+  //   const fetchTips = async () => {
+  //     const res = await axios.get(
+  //       "https://wknd-take-home-challenge-api.herokuapp.com/help-tips"
+  //     );
+  //     setslidesTips(res.data);
+  //     console.log(res.data);
+  //   };
+  //   fetchTips();
+  // }, [slidesTips]);
+  const fetchTips = async () => {
+    const res = await axios.get(
+      "https://wknd-take-home-challenge-api.herokuapp.com/help-tips"
+    );
+    setslidesTips(res.data);
+    console.log(res.data);
+  };
+
+  useEffect(() => {
+    fetchTips();
+  }, [slidesTips]);
 
   const settings = {
-    dots: true,
-    infinite: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
@@ -88,8 +109,6 @@ const mainPages = () => {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
-          infinite: true,
-          dots: true,
         },
       },
       {
@@ -119,14 +138,14 @@ const mainPages = () => {
         <div className="container">
           <img
             src={logo}
-            srcset={(logo2, logo3)}
+            srcSet={(logo2, logo3)}
             className="logo-bitmap"
             alt="logo"
           />
           <div className="flex-fill title">
             <div className="good-morning">
               Good Morning <br />
-              <strong class="Fellas">Fellas</strong>
+              <strong className="Fellas">Fellas</strong>
             </div>
           </div>
         </div>
@@ -147,7 +166,10 @@ const mainPages = () => {
                 alt="lego"
               />
 
-              <button className="btn-rounded btn-hero btn-hero-effect position-absolute start-50 translate-middle">
+              <button
+                href="#qoutes"
+                className="btn-rounded btn-hero btn-hero-effect position-absolute start-50 translate-middle"
+              >
                 Let's Go
               </button>
             </div>
@@ -155,7 +177,7 @@ const mainPages = () => {
         </div>
       </header>
 
-      <section className="quotes-section">
+      <section className="quotes-section" id="quotes">
         <div
           className="d-flex align-items-end flex-column bd-highlight"
           style={{ height: "200px" }}
@@ -170,7 +192,7 @@ const mainPages = () => {
         <div className="d-flex flex-column">
           <div className="d-flex justify-content-center content-text">
             <figure className="text-end">
-              <blockquote class="blockquote p-3">
+              <blockquote className="blockquote p-3">
                 <p>
                   <span className="text-blue">Deffinition;</span> a practice or
                   exercise to test or improve one's fitness for athletic
@@ -189,10 +211,10 @@ const mainPages = () => {
             <h2 className="text-white text-center title m-0">Testimonial</h2>
             <div className="container">
               <Slider {...settings}>
-                {slidesTesti.map((slide) => (
-                  <div className="slick-slide" key={slide.id}>
-                    <h5 className="slick-slide-title">{slide.by}</h5>
-                    <p className="slick-slide-label">{slide.testimony}</p>
+                {slidesTesti.map((slides) => (
+                  <div className="slick-slide" key={slides.id}>
+                    <h5 className="slick-slide-title">{slides.by}</h5>
+                    <p className="slick-slide-label">{slides.testimony}</p>
                   </div>
                 ))}
               </Slider>
@@ -230,19 +252,19 @@ const mainPages = () => {
             </p>
           </div>
           <div
-            className="box-body mt-5"
+            className="box-body"
             data-aos="fade-right"
             data-aos-duration="1500"
           >
-            <h2 className="title">Help & Tips</h2>
+            <h2 className="title tips">Help & Tips</h2>
           </div>
         </div>
         <div
-          class="container-tips"
+          className="container-tips"
           data-aos="fade-right"
           data-aos-duration="1500"
         >
-          <div class="path-3">
+          <div className="path-3">
             <img src={path3} alt="path3" />
           </div>
           {slidesTips.map((tips) => (
@@ -263,7 +285,7 @@ const mainPages = () => {
         <div className="container container-box text-center">
           <div
             id="triggerLegoOnLeft"
-            class="box-body last-dark-box"
+            className="box-body last-dark-box"
             data-aos="fade-up"
             data-aos-duration="1500"
           >
@@ -286,11 +308,11 @@ const mainPages = () => {
           <p className="text-center">
             <strong>wknd@</strong>2020
           </p>
-          <p className="version-info text-end">alpha version 0.1</p>
+          <p className="version-info">alpha version 0.1</p>
         </div>
       </footer>
     </>
   );
 };
 
-export default mainPages;
+export default MainPages;
